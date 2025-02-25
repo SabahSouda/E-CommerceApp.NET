@@ -1,0 +1,83 @@
+﻿@model MonParfumApp.Models.Panier
+
+<div class="container">
+    <h1 class="title">Mon Panier</h1>
+
+    @if (!Model.Items.Any())
+    {
+        <p>Votre panier est vide.</p>
+    }
+    else
+    {
+        <!-- Grille des articles du panier -->
+        <div class="panier-grid">
+            @foreach (var item in Model.Items)
+            {
+                <div class="panier-item">
+                    <!-- Image de l'article -->
+                    <div class="panier-item-image">
+                        @if (!string.IsNullOrEmpty(item.Parfum?.ImagePath))
+                        {
+                            <img src="@Url.Content(item.Parfum.ImagePath)" alt="@item.Parfum?.Nom" />
+                        }
+                        else
+                        {
+                            <img src="https://via.placeholder.com/100" alt="Image indisponible" />
+                        }
+                    </div>
+
+                    <!-- Détails de l'article -->
+                    <div class="panier-item-details">
+                        <h2 class="panier-item-name">@item.Parfum?.Nom</h2>
+                        <p class="panier-item-description">@item.Parfum?.Description</p>
+                        <p class="panier-item-price">Prix : @item.Parfum?.Prix.ToString("F2") €</p>
+
+                        <!-- Section Quantité -->
+                        <div class="panier-item-quantity">
+                            <!-- Diminuer la quantité -->
+                            <form action="@Url.Action("ModifierQuantite", "Panier")" method="post" class="panier-quantity-form">
+                                <input type="hidden" name="itemId" value="@item.Id" />
+                                <input type="hidden" name="nouvelleQuantite" value="@(item.Quantite - 1)" />
+                                <button type="submit" class="btn btn-outline-secondary btn-sm" @if (item.Quantite <= 1)
+                                {
+                                    <text>disabled</text>
+                                }>-</button>
+                            </form>
+
+                            <!-- Affichage de la quantité -->
+                            <span class="panier-quantity-display">@item.Quantite</span>
+
+                            <!-- Augmenter la quantité -->
+                            <form action="@Url.Action("ModifierQuantite", "Panier")" method="post" class="panier-quantity-form">
+                                <input type="hidden" name="itemId" value="@item.Id" />
+                                <input type="hidden" name="nouvelleQuantite" value="@(item.Quantite + 1)" />
+                                <button type="submit" class="btn btn-outline-secondary btn-sm">+</button>
+                            </form>
+                        </div>
+
+                        <!-- Supprimer l'article -->
+                        <form action="@Url.Action("SupprimerDuPanier", "Panier")" method="post" class="panier-item-remove">
+                            <input type="hidden" name="itemId" value="@item.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                        </form>
+
+                        <!-- Total pour l'article -->
+                        <p class="panier-item-total">
+                            Total : @string.Format("{0:F2}", item.Quantite * item.Parfum.Prix) €
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Section Total du Panier -->
+        <div class="total-section">
+            <p class="total-price">
+                Total du panier : @ViewBag.TotalPanier.ToString("F2") €
+            </p>
+            <form action="" method="post">
+                <button type="submit" class="btn btn-success">Payer</button>
+            </form>
+        </div>
+    }
+</div>

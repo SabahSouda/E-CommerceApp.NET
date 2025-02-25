@@ -1,0 +1,54 @@
+﻿@model List<MonParfumApp.Models.Parfum>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #c3e6cb;">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<h1 style="font-size: 2rem; font-weight: bold; color: #333333; margin-bottom: 20px;">Notre Collection de Parfums</h1>
+
+<!-- Grille des parfums -->
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+    @foreach (var parfum in Model)
+    {
+        <div style="background-color: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            <!-- Affichage de l'image du parfum -->
+            @if (!string.IsNullOrEmpty(parfum.ImagePath))
+            {
+                <img src="@Url.Content(parfum.ImagePath)" alt="Image de @parfum.Nom" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 15px;" />
+            }
+            else
+            {
+                <div style="width: 100%; height: 200px; background-color: #f5f5f5; display: flex; justify-content: center; align-items: center; border-radius: 4px; margin-bottom: 15px; color: #999999; font-size: 0.875rem;">
+                    Image indisponible
+                </div>
+            }
+
+            <h2 style="font-size: 1.25rem; font-weight: bold; color: #333333;">@parfum.Nom</h2>
+            <p style="color: #666666; margin-top: 10px;">@parfum.Description</p>
+            <p style="font-weight: bold; font-size: 1.1rem; color: #111111; margin-top: 15px;">@parfum.Prix.ToString("F2") €</p>
+            <p style="color: #666666; margin-top: 10px;">Catégorie: @parfum.Categorie?.Nom</p>
+
+            <!-- Formulaire pour commander avec quantité -->
+            <form action="@Url.Action("Commande", "Commande", new { id = parfum.Id })" method="post" style="margin-top: 15px;">
+                <div style="margin-bottom: 15px;">
+                    <label for="quantite-@parfum.Id" style="display: block; font-size: 0.875rem; font-weight: bold; color: #555555;">Quantité</label>
+                    <input type="number" id="quantite-@parfum.Id" name="quantite" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin-top: 5px;" value="1" required />
+                </div>
+
+                <button type="submit" style="width: 100%; padding: 10px; background-color: #17a2b8; color: white; font-weight: bold; border: none; border-radius: 4px; cursor: pointer;">
+                    Commander
+                </button>
+            </form>
+
+            <!-- Formulaire pour ajouter au panier -->
+            <form action="@Url.Action("AjouterAuPanier", "Panier", new { parfumId = parfum.Id })" method="post" style="margin-top: 15px;">
+                <button type="submit" style="width: 100%; padding: 10px; background-color: #e98d4b; color: white; font-weight: bold; border: none; border-radius: 4px; cursor: pointer;">
+                    Ajouter au panier
+                </button>
+            </form>
+        </div>
+    }
+</div>

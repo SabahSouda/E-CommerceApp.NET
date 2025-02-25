@@ -1,0 +1,163 @@
+﻿
+@model IEnumerable<MonParfumApp.Models.Categorie>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Admin Template</title>
+    <meta name="author" content="David Grzyb">
+    <meta name="description" content="">
+
+    <!-- Tailwind -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
+
+    <style>
+        .font-family-karla {
+            font-family: karla;
+        }
+
+        .bg-sidebar {
+            background: #3d68ff;
+        }
+
+        .cta-btn {
+            color: #3d68ff;
+        }
+
+        .upgrade-btn {
+            background: #1947ee;
+        }
+
+            .upgrade-btn:hover {
+                background: #0038fd;
+            }
+
+        .active-nav-link {
+            background: #1947ee;
+        }
+
+        .nav-item:hover {
+            background: #1947ee;
+        }
+
+        .account-link:hover {
+            background: #3d68ff;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-family-karla flex">
+
+    <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+        <div class="p-6">
+            <a href="/" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+            <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                <i class="fas fa-plus mr-3"></i> New Report
+            </button>
+        </div>
+        <nav class="text-white text-base font-semibold pt-3">
+            <a class="flex items-center  text-white py-4 pl-6 nav-item" asp-area="" asp-controller="admin" asp-action="Index">
+                <i class="fas fa-tachometer-alt mr-3"></i>
+                Dashboard
+            </a>
+           <a class="flex items-center text-white  opacity-75 hover:opacity-100 py-4 pl-6 nav-item" asp-area="" asp-controller="admin" asp-action="ParfumIndex">
+                <i class="fas fa-sticky-note mr-3"></i>
+                Perfum List
+            </a>
+            <a class="flex items-center active-nav-link text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item" asp-area="" asp-controller="categorie" asp-action="Index">
+                <i class="fas fa-table mr-3"></i>
+                Categories
+            </a>
+            <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item" asp-area="" asp-controller="commande" asp-action="Index">
+                <i class="fas fa-align-left mr-3"></i>
+                Orders
+            </a>
+            <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                Tabbed Content
+            </a>
+            <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-calendar mr-3"></i>
+                Calendar
+            </a>
+        </nav>
+        <a href="#" class="absolute w-full upgrade-btn bottom-0 active-nav-link text-white flex items-center justify-center py-4">
+            <i class="fas fa-arrow-circle-up mr-3"></i>
+            Upgrade to Pro!
+        </a>
+    </aside>
+
+    <div class="w-full flex flex-col h-screen overflow-y-hidden">
+
+        <!-- Top Header with Search and Logout -->
+        <header class="w-full bg-white py-4 px-6 flex items-center justify-between">
+            <div class="flex-1 text-center">
+                <input type="text" placeholder="Search..." class="w-1/2 px-4 py-2 border border-gray-300 rounded-full" />
+            </div>
+            <div>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                    <button class="btn btn-link nav-link text-dark" type="submit">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </div>
+
+
+        </header>
+
+        <div class="w-full overflow-x-hidden border-t flex flex-col">
+            <main class="w-full flex-grow p-6">
+                <h1 class="text-3xl font-bold text-gray-800 pb-6">Liste des Catégories</h1>
+
+                <!-- Bouton pour ajouter une nouvelle catégorie -->
+                <a href="@Url.Action("Create", "Categorie")" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600 transition-colors mb-3 inline-block">Ajouter une nouvelle catégorie</a>
+
+                <table class="min-w-full table-auto bg-white shadow-md rounded-lg">
+                    <thead>
+                        <tr class="bg-gray-100 border-b">
+                            <th class="px-6 py-3 text-left text-gray-600">Nom</th>
+                            <th class="px-6 py-3 text-left text-gray-600">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var categorie in Model)
+                        {
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="px-6 py-4 text-gray-800">@categorie.Nom</td>
+                                <td class="px-6 py-4">
+                                    <a href="@Url.Action("Edit", "Categorie", new { id = categorie.Id })" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">Modifier</a>
+
+                                    <!-- Formulaire de suppression avec méthode POST -->
+                                    <form action="@Url.Action("Delete", "Categorie", new { id = categorie.Id })" method="post" style="display:inline;">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition-colors" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?');">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </main>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+
+
+

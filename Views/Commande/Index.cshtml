@@ -1,0 +1,225 @@
+﻿@model IEnumerable<MonParfumApp.Models.Commande>
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Admin Template</title>
+    <meta name="author" content="David Grzyb">
+    <meta name="description" content="">
+
+    <!-- Tailwind -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
+
+    <style>
+        .font-family-karla {
+            font-family: karla;
+        }
+
+        .bg-sidebar {
+            background: #3d68ff;
+        }
+
+        .cta-btn {
+            color: #3d68ff;
+        }
+
+        .upgrade-btn {
+            background: #1947ee;
+        }
+
+            .upgrade-btn:hover {
+                background: #0038fd;
+            }
+
+        .active-nav-link {
+            background: #1947ee;
+        }
+
+        .nav-item:hover {
+            background: #1947ee;
+        }
+
+        .account-link:hover {
+            background: #3d68ff;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-family-karla flex">
+
+    <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+        <div class="p-6">
+            <a href="/" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+            <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                <i class="fas fa-plus mr-3"></i> New Report
+            </button>
+        </div>
+        <nav class="text-white text-base font-semibold pt-3">
+            <a class="flex items-center  text-white py-4 pl-6 nav-item" asp-area="" asp-controller="admin" asp-action="Index">
+                <i class="fas fa-tachometer-alt mr-3"></i>
+                Dashboard
+            </a>
+            <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item" asp-area="" asp-controller="admin" asp-action="ParfumIndex">
+                <i class="fas fa-sticky-note mr-3"></i>
+                Perfum List
+            </a>
+            <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item" asp-area="" asp-controller="categorie" asp-action="Index">
+                <i class="fas fa-table mr-3"></i>
+                Categories
+            </a>
+            <a class="flex items-center text-white active-nav-link opacity-75 hover:opacity-100 py-4 pl-6 nav-item" asp-area="" asp-controller="commande" asp-action="Index">
+                <i class="fas fa-align-left mr-3"></i>
+                Orders
+            </a>
+            <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                Tabbed Content
+            </a>
+            <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-calendar mr-3"></i>
+                Calendar
+            </a>
+        </nav>
+        <a href="#" class="absolute w-full upgrade-btn bottom-0 active-nav-link text-white flex items-center justify-center py-4">
+            <i class="fas fa-arrow-circle-up mr-3"></i>
+            Upgrade to Pro!
+        </a>
+    </aside>
+
+    <div class="w-full flex flex-col h-screen overflow-y-hidden">
+
+        <!-- Top Header with Search and Logout -->
+        <header class="w-full bg-white py-4 px-6 flex items-center justify-between">
+            <div class="flex-1 text-center">
+                <input type="text" placeholder="Search..." class="w-1/2 px-4 py-2 border border-gray-300 rounded-full" />
+            </div>
+            <div>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                    <button class="btn btn-link nav-link text-dark" type="submit">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </div>
+
+
+        </header>
+
+       
+
+        <div class="w-full overflow-x-auto border-t flex flex-col">
+            <main class="w-full flex-grow p-6">
+                <h1 class="text-3xl text-black pb-6">Liste des Commandes</h1>
+
+                @if (!Model.Any())
+                {
+                    <p>Aucune commande trouvée.</p>
+                }
+                else
+                {
+                    <div class="overflow-x-auto shadow-md rounded-lg">
+                        <table class="min-w-full bg-white border border-gray-300">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="py-3 px-6 text-left text-gray-700">Commande ID</th>
+                                    <th class="py-3 px-6 text-left text-gray-700">Date</th>
+                                    <th class="py-3 px-6 text-left text-gray-700">Total</th>
+                                    <th class="py-3 px-6 text-left text-gray-700">Parfum</th>
+                                    <th class="py-3 px-6 text-left text-gray-700">Quantité</th>
+                                    <th class="py-3 px-6 text-left text-gray-700">Nom et prenom </th>
+                                    <th class="py-3 px-6 text-left text-gray-700">Email du Client</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var commande in Model)
+                                {
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="py-3 px-6 text-sm text-gray-700">@commande.Id</td>
+                                        <td class="py-3 px-6 text-sm text-gray-700">@commande.DateCommande.ToString("dd/MM/yyyy")</td>
+                                        <td class="py-3 px-6 text-sm text-gray-700">@commande.Total.ToString("F2") €</td>
+                                        <td class="py-3 px-6 text-sm text-gray-700">
+                                            @foreach (var item in commande.Items)
+                                            {
+                                                <div>
+                                                    @item.Parfum?.Nom
+                                                </div>
+                                            }
+                                        </td>
+                                        <td class="py-3 px-6 text-sm text-gray-700">
+                                            @foreach (var item in commande.Items)
+                                            {
+                                                <div>
+                                                    @item.Quantite
+                                                </div>
+                                            }
+                                        </td>
+                                        <td class="py-3 px-6 text-sm text-gray-700">@commande.Client?.Nom @commande.Client?.Prenom</td> <!-- Affichage de l'email du client -->
+                                        <td class="py-3 px-6 text-sm text-gray-700">@commande.Client?.Email</td> <!-- Affichage de l'email du client -->
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </main>
+        </div>
+
+
+
+
+
+            </main>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+﻿@model MonParfumApp.Models.Commande
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation de Commande</title>
+</head>
+<body>
+    <h1>Confirmation de votre commande</h1>
+
+    <p>Merci pour votre commande !</p>
+    <p>Numéro de commande : <strong>@Model.Id</strong></p>
+    <p>Date de commande : <strong>@Model.DateCommande.ToString("dd/MM/yyyy")</strong></p>
+    <p>Montant total : <strong>@Model.Total €</strong></p>
+
+    <h2>Détails de la commande</h2>
+    <ul>
+        @foreach (var item in Model.Items)
+        {
+            <li>@item.Parfum.Nom - Quantité : @item.Quantite - Prix unitaire : @item.PrixUnitaire €</li>
+        }
+    </ul>
+
+    <a href="@Url.Action("Index", "Parfum")">Retourner à la liste des parfums></a>
+</body>
+</html>

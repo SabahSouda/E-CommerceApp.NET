@@ -1,0 +1,185 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+
+/* Conteneur de la section de bienvenue */
+.welcome-container {
+    background-color: rgba(213, 194, 182, 0.7); /* Fond blanc */
+    padding: 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère pour ajouter de la profondeur */
+    width: 80%; /* Largeur du conteneur */
+    max-width: 600px; /* Limiter la taille maximale du conteneur */
+    font-family: 'Spectral SC', serif; /* Appliquer la police italienne uniquement à la section de bienvenue */
+    margin: 10% auto; /* Centrer verticalement et horizontalement */
+    text-align: center; /* Centrer le texte à l'intérieur du conteneur */
+    margin-left: 25%; /* Déplacer légèrement le conteneur vers la droite */
+}
+
+    /* Style du titre de bienvenue */
+    .welcome-container h1 {
+        font-size: 3rem; /* Taille de police ajustée */
+        color: #333; /* Couleur douce pour le texte */
+        margin: 0;
+    }
+
+    /* Ajout d'un petit texte sous le titre pour un accueil chaleureux */
+    .welcome-container p {
+        font-size: 1.2rem;
+        color: #333; /* Texte légèrement gris */
+        margin-top: 10px;
+    }
+
+
+
+/* Container principal */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Titre principal */
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Grille de 5 colonnes */
+.panier-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+/* Style des éléments du panier */
+.panier-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Image du produit */
+.panier-item-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Détails du produit */
+.panier-item-details {
+    margin-top: 15px;
+}
+
+.panier-item-name {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.panier-item-description {
+    color: #666;
+    margin-top: 10px;
+}
+
+.panier-item-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #111;
+    margin-top: 15px;
+}
+
+/* Quantité du produit */
+.panier-item-quantity {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.btn-outline-secondary {
+    padding: 5px 10px;
+    font-size: 1rem;
+}
+
+.panier-quantity-display {
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+/* Bouton supprimer */
+.btn-danger {
+    font-size: 0.9rem;
+}
+
+.panier-item-total {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* Section Total */
+.total-section {
+    margin-top: 20px;
+    background-color: #f7f7f7;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: right;
+}
+
+.total-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.btn-success {
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+/* Responsive pour les petits écrans */
+@media (max-width: 1200px) {
+    .panier-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .panier-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .panier-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 400px) {
+    .panier-grid {
+        grid-template-columns: 1fr;
+    }
+}

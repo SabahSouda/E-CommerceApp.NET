@@ -1,0 +1,39 @@
+﻿@model MonParfumApp.ViewModels.LoginViewModel
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+          
+
+            <!-- Formulaire avec fond blanc et style moderne -->
+            <form asp-action="Login" method="post" class="p-4 shadow-sm rounded bg-white">
+                <!-- Titre de la page -->
+                <h2 class="text-center mb-4">Connexion</h2>
+                <div class="mb-3">
+                    <label for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" id="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Password" class="form-label">Mot de passe</label>
+                    <input asp-for="Password" type="password" class="form-control" id="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input asp-for="RememberMe" type="checkbox" class="form-check-input" id="RememberMe" />
+                    <label class="form-check-label" for="RememberMe">Se souvenir de moi</label>
+                </div>
+
+                <!-- Bouton de soumission -->
+                <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+            </form>
+
+            <!-- Lien vers l'inscription -->
+            <div class="mt-3 text-center">
+                <p>Pas encore de compte ? <a asp-controller="Account" asp-action="Register">S'inscrire</a></p>
+            </div>
+        </div>
+    </div>
+</div>

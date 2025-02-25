@@ -1,0 +1,150 @@
+﻿
+@model MonParfumApp.Models.Categorie
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Admin Template</title>
+    <meta name="author" content="David Grzyb">
+    <meta name="description" content="">
+
+    <!-- Tailwind -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
+
+    <style>
+        .font-family-karla {
+            font-family: karla;
+        }
+
+        .bg-sidebar {
+            background: #3d68ff;
+        }
+
+        .cta-btn {
+            color: #3d68ff;
+        }
+
+        .upgrade-btn {
+            background: #1947ee;
+        }
+
+            .upgrade-btn:hover {
+                background: #0038fd;
+            }
+
+        .active-nav-link {
+            background: #1947ee;
+        }
+
+        .nav-item:hover {
+            background: #1947ee;
+        }
+
+        .account-link:hover {
+            background: #3d68ff;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-family-karla flex">
+
+    <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+        <div class="p-6">
+            <a href="/" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+            <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                <i class="fas fa-plus mr-3"></i> New Report
+            </button>
+        </div>
+        <nav class="text-white text-base font-semibold pt-3">
+            <a class="flex items-center  text-white py-4 pl-6 nav-item" asp-area="" asp-controller="admin" asp-action="Index">
+                <i class="fas fa-tachometer-alt mr-3"></i>
+                Dashboard
+            </a>
+            <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item" asp-area="" asp-controller="parfum" asp-action="Index">
+                <i class="fas fa-sticky-note mr-3"></i>
+                Perfum List
+            </a>
+            <a class="flex items-center active-nav-link text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item" asp-area="" asp-controller="categorie" asp-action="Index">
+                <i class="fas fa-table mr-3"></i>
+                Categories
+            </a>
+            <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-align-left mr-3"></i>
+                Orders
+            </a>
+            <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                Tabbed Content
+            </a>
+            <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-calendar mr-3"></i>
+                Calendar
+            </a>
+        </nav>
+        <a href="#" class="absolute w-full upgrade-btn bottom-0 active-nav-link text-white flex items-center justify-center py-4">
+            <i class="fas fa-arrow-circle-up mr-3"></i>
+            Upgrade to Pro!
+        </a>
+    </aside>
+
+    <div class="w-full flex flex-col h-screen overflow-y-hidden">
+
+        <!-- Top Header with Search and Logout -->
+        <header class="w-full bg-white py-4 px-6 flex items-center justify-between">
+            <div class="flex-1 text-center">
+                <input type="text" placeholder="Search..." class="w-1/2 px-4 py-2 border border-gray-300 rounded-full" />
+            </div>
+            <div>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                    <button class="btn btn-link nav-link text-dark" type="submit">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </div>
+
+
+        </header>
+
+        <div class="w-full overflow-x-hidden border-t flex flex-col">
+            <main class="w-full flex-grow p-6">
+                <h1 class="text-3xl text-black pb-6">Dashboard</h1>
+
+            </main>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+<h1>Supprimer la catégorie</h1>
+
+<p>Êtes-vous sûr de vouloir supprimer la catégorie : <strong>@Model.Nom</strong> ?</p>
+
+<form id="deleteForm" action="@Url.Action("Delete", "Categorie", new { id = Model.Id })" method="post">
+    <button type="button" class="btn btn-danger" onclick="confirmDelete()">Supprimer</button>
+    <a href="@Url.Action("Index", "Categorie")" class="btn btn-secondary">Annuler</a>
+</form>
+
+<script type="text/javascript">
+    function confirmDelete() {
+        var result = confirm("Êtes-vous sûr de vouloir supprimer cette catégorie ?");
+
+        if (result) {
+            document.getElementById("deleteForm").submit();
+        }
+    }
+</script>
